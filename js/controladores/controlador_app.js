@@ -74,6 +74,7 @@ class ControladorApp {
     this.#pila = [];
     this.#pantallaActual = 'dashboard';
     history.replaceState({ pantalla: 'dashboard' }, '');
+    history.pushState({ pantalla: 'dashboard' }, '');
     this.#renderizarDashboard();
   }
 
