@@ -14,7 +14,39 @@ class VistaValeGenerado extends VistaBase {
   #vincular() {
     document.getElementById('btn-nuevo-desde-vale').addEventListener('click', () => this.#onNuevo());
     document.getElementById('btn-inicio-desde-vale').addEventListener('click', () => this.#onInicio());
-    document.getElementById('btn-imprimir').addEventListener('click', () => window.print());
+    document.getElementById('btn-imprimir').addEventListener('click', () => this.#compartir());
+  }
+
+  async #compartir() {
+    const btn = document.getElementById('btn-imprimir');
+    const textoOriginal = btn.textContent;
+    btn.textContent = 'Generando imagen...';
+    btn.disabled = true;
+    try {
+      const elemento = document.getElementById('vale-documento');
+      const canvas = await html2canvas(elemento, { scale: 2, backgroundColor: '#ffffff', useCORS: true });
+      canvas.toBlob(async (blob) => {
+        const nro = document.getElementById('vale-nro').textContent;
+        const archivo = new File([blob], `vale-${nro}.png`, { type: 'image/png' });
+        if (navigator.canShare && navigator.canShare({ files: [archivo] })) {
+          await navigator.share({ files: [archivo], title: `Vale de Salida N° ${nro}` });
+        } else if (navigator.share) {
+          const url = canvas.toDataURL('image/png');
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = `vale-${nro}.png`;
+          link.click();
+        } else {
+          window.print();
+        }
+        btn.textContent = textoOriginal;
+        btn.disabled = false;
+      }, 'image/png');
+    } catch {
+      btn.textContent = textoOriginal;
+      btn.disabled = false;
+      window.print();
+    }
   }
 
   renderizar(vale) {
