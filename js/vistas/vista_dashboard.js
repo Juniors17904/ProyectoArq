@@ -13,10 +13,13 @@ class VistaDashboard extends VistaBase {
 
   #vincular() {
     document.getElementById('btn-nuevo-vale').addEventListener('click', () => this.#onNuevoPedido());
-    document.getElementById('btn-ver-historial').addEventListener('click', () => this.#onVerHistorial());
     document.getElementById('btn-cerrar-sesion').addEventListener('click', () => this.#onCerrarSesion());
     document.getElementById('btn-menu').addEventListener('click', () => this.#toggleMenu());
     document.getElementById('overlay-menu').addEventListener('click', () => this.#cerrarMenu());
+    document.getElementById('menu-inicio').addEventListener('click', () => this.#cerrarMenu());
+    document.getElementById('menu-nuevo').addEventListener('click', () => { this.#cerrarMenu(); this.#onNuevoPedido(); });
+    document.getElementById('menu-historial').addEventListener('click', () => { this.#cerrarMenu(); this.#onVerHistorial(); });
+    document.getElementById('menu-salir').addEventListener('click', () => this.#onCerrarSesion());
   }
 
   #toggleMenu() {

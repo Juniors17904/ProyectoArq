@@ -10,30 +10,34 @@ class ControladorApp {
   #controladorLogin;
   #controladorVale;
   #gestorPWA;
+  #pila;
+  #pantallaActual;
 
   constructor() {
     this.#supervisorActual = null;
     this.#gestorStorage = new GestorStorage();
     this.#catalogo = new CatalogoMateriales();
+    this.#pila = [];
+    this.#pantallaActual = null;
 
     this.#vistaLogin = new VistaLogin((id, pass) => this.#controladorLogin.intentarLogin(id, pass));
     this.#vistaDashboard = new VistaDashboard(
-      () => this.#irAFormulario(),
-      () => this.#irAHistorial(),
+      () => this.#abrir('formulario'),
+      () => this.#abrir('historial'),
       () => this.#cerrarSesion()
     );
     this.#vistaFormulario = new VistaFormularioVale(
       this.#catalogo,
       (datos) => this.#controladorVale.generarVale(datos, this.#supervisorActual),
-      () => this.#irADashboard()
+      () => history.back()
     );
     this.#vistaVale = new VistaValeGenerado(
-      () => this.#irAFormulario(),
-      () => this.#irADashboard()
+      () => this.#abrir('formulario'),
+      () => this.#irInicio()
     );
     this.#vistaHistorial = new VistaHistorial(
-      () => this.#irADashboard(),
-      (valeObj) => this.#verValeDesdeHistorial(valeObj)
+      () => history.back(),
+      (valeObj) => this.#abrirVale(valeObj)
     );
 
     this.#controladorLogin = new ControladorLogin(
@@ -51,10 +55,11 @@ class ControladorApp {
   }
 
   iniciar() {
+    window.addEventListener('popstate', (e) => this.#alRetroceder(e));
     const supervisor = this.#controladorLogin.verificarSesionActiva();
     if (supervisor) {
       this.#supervisorActual = supervisor;
-      this.#irADashboard();
+      this.#entrarDashboard();
     } else {
       this.#vistaLogin.mostrar();
     }
@@ -62,38 +67,74 @@ class ControladorApp {
 
   #alIniciarSesion(supervisor) {
     this.#supervisorActual = supervisor;
-    this.#irADashboard();
+    this.#entrarDashboard();
   }
 
-  #irADashboard() {
+  #entrarDashboard() {
+    this.#pila = [];
+    this.#pantallaActual = 'dashboard';
+    history.replaceState({ pantalla: 'dashboard' }, '');
+    this.#renderizarDashboard();
+  }
+
+  #renderizarDashboard() {
     const vales = this.#controladorVale.obtenerTodos();
     this.#vistaDashboard.mostrar();
     this.#vistaDashboard.renderizar(this.#supervisorActual, vales);
   }
 
-  #irAFormulario() {
-    this.#vistaFormulario.mostrar();
+  #abrir(pantalla) {
+    this.#pila.push(this.#pantallaActual);
+    this.#pantallaActual = pantalla;
+    history.pushState({ pantalla }, '');
+    this.#mostrar(pantalla);
   }
 
-  #irAHistorial() {
-    const vales = this.#controladorVale.obtenerTodos();
-    this.#vistaHistorial.mostrar(vales);
+  #abrirVale(valeObj) {
+    const vale = Vale.desdeObjeto(valeObj);
+    this.#vistaVale.renderizar(vale);
+    this.#abrir('vale');
+  }
+
+  #mostrar(pantalla) {
+    if (pantalla === 'dashboard') this.#renderizarDashboard();
+    else if (pantalla === 'formulario') this.#vistaFormulario.mostrar();
+    else if (pantalla === 'historial') this.#vistaHistorial.mostrar(this.#controladorVale.obtenerTodos());
+    else if (pantalla === 'vale') this.#vistaVale.mostrar();
+  }
+
+  #irInicio() {
+    this.#pila = [];
+    this.#pantallaActual = 'dashboard';
+    history.pushState({ pantalla: 'dashboard' }, '');
+    this.#renderizarDashboard();
   }
 
   #alGenerarVale(vale) {
-    this.#vistaVale.mostrar();
     this.#vistaVale.renderizar(vale);
+    this.#abrir('vale');
   }
 
-  #verValeDesdeHistorial(valeObj) {
-    const vale = Vale.desdeObjeto(valeObj);
-    this.#vistaVale.mostrar();
-    this.#vistaVale.renderizar(vale);
+  #alRetroceder() {
+    if (!this.#supervisorActual) return;
+    if (this.#pila.length === 0) {
+      if (confirm('¿Quieres cerrar sesión?')) {
+        this.#cerrarSesion();
+      } else {
+        history.pushState({ pantalla: 'dashboard' }, '');
+      }
+      return;
+    }
+    const anterior = this.#pila.pop();
+    this.#pantallaActual = anterior;
+    this.#mostrar(anterior);
   }
 
   #cerrarSesion() {
     this.#gestorStorage.cerrarSesion();
     this.#supervisorActual = null;
+    this.#pila = [];
+    this.#pantallaActual = null;
     this.#vistaLogin.mostrar();
   }
 }

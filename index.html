@@ -57,10 +57,10 @@
         </div>
       </div>
       <ul class="menu-lista">
-        <li onclick="document.getElementById('overlay-menu').click()">&#127968; Inicio</li>
-        <li onclick="document.getElementById('btn-nuevo-vale').click(); document.getElementById('overlay-menu').click()">&#128203; Nuevo Vale</li>
-        <li onclick="document.getElementById('btn-ver-historial').click(); document.getElementById('overlay-menu').click()">&#128193; Historial</li>
-        <li class="menu-salir" onclick="document.getElementById('btn-cerrar-sesion').click()">&#128682; Cerrar Sesión</li>
+        <li id="menu-inicio">&#127968; Inicio</li>
+        <li id="menu-nuevo">&#128203; Nuevo Vale</li>
+        <li id="menu-historial">&#128193; Historial</li>
+        <li id="menu-salir" class="menu-salir">&#128682; Cerrar Sesión</li>
       </ul>
     </nav>
 
@@ -83,7 +83,6 @@
         </div>
         <div class="acciones-rapidas">
           <button id="btn-nuevo-vale" class="btn btn-primario">➕ Nuevo Vale</button>
-          <button id="btn-ver-historial" class="btn btn-secundario">🗂 Historial</button>
           <button id="btn-cerrar-sesion" class="btn btn-ghost">🚶 Salir</button>
         </div>
       </div>
