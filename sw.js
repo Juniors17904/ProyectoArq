@@ -1,4 +1,4 @@
-const CACHE = 'almacen-v9';
+const CACHE = 'almacen-v10';
 const ARCHIVOS = ['/', '/index.html', '/css/estilos.css', '/js/modelos/material.js', '/js/modelos/categoria.js', '/js/modelos/item_vale.js', '/js/modelos/supervisor.js', '/js/modelos/vale.js', '/js/servicios/gestor_storage.js', '/js/servicios/gestor_pwa.js', '/js/servicios/generador_qr.js', '/js/servicios/catalogo_materiales.js', '/js/vistas/vista_base.js', '/js/vistas/vista_login.js', '/js/vistas/vista_dashboard.js', '/js/vistas/vista_formulario_vale.js', '/js/vistas/vista_vale_generado.js', '/js/vistas/vista_historial.js', '/js/controladores/controlador_login.js', '/js/controladores/controlador_vale.js', '/js/controladores/controlador_app.js', 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(ARCHIVOS))); self.skipWaiting(); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))); self.clients.claim(); });
