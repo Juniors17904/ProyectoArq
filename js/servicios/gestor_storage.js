@@ -2,27 +2,11 @@ class GestorStorage {
   #claveVales;
   #claveSesion;
   #claveContador;
-  #nombresProhibidos;
 
   constructor() {
     this.#claveVales = 'almacen_vales';
     this.#claveSesion = 'almacen_sesion';
     this.#claveContador = 'almacen_contador';
-    this.#nombresProhibidos = ['whister', 'villanueva'];
-    this.#limpiarSesionAntigua();
-  }
-
-  #limpiarSesionAntigua() {
-    const claves = ['almacenpro_sesion', 'almacen_sesion'];
-    claves.forEach(clave => {
-      const data = localStorage.getItem(clave);
-      if (!data) return;
-      const sesion = JSON.parse(data);
-      const nombre = (sesion.nombre || '').toLowerCase();
-      const esAntigua = this.#nombresProhibidos.some(n => nombre.includes(n));
-      if (esAntigua) localStorage.removeItem(clave);
-    });
-    localStorage.removeItem('almacenpro_sesion');
   }
 
   guardarVale(vale) {
