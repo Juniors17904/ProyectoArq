@@ -13,9 +13,9 @@ class ControladorLogin {
 
   #cargarSupervisores() {
     return [
-      new Supervisor('SUP-001', 'Daniel Córdova', '1234', false, 'Empresa Demo S.A.C.'),
-      new Supervisor('SUP-002', 'Andrés Paredes', '1234', true, 'Empresa Demo S.A.C.'),
-      new Supervisor('SUP-003', 'Rosa Medina', '1234', true, 'Empresa Demo S.A.C.'),
+      new Supervisor('SUP-001', 'Juan Rolando Chavesta', '1234', false, 'Arquideas Metálica S.A.C.'),
+      new Supervisor('SUP-002', 'Andrés Paredes', '1234', true, 'Arquideas Metálica S.A.C.'),
+      new Supervisor('SUP-003', 'Rosa Medina', '1234', true, 'Arquideas Metálica S.A.C.'),
     ];
   }
 
