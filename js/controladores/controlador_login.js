@@ -13,9 +13,9 @@ class ControladorLogin {
 
   #cargarSupervisores() {
     return [
-      new Supervisor('SUP-001', 'Whister Villanueva', '1234', false, 'CONSORCIO DHMONT & CG & M SAC'),
-      new Supervisor('SUP-002', 'Carlos Quispe', '1234', true, 'CONSORCIO DHMONT & CG & M SAC'),
-      new Supervisor('SUP-003', 'Luis Mamani', '1234', true, 'CONSORCIO DHMONT & CG & M SAC'),
+      new Supervisor('SUP-001', 'Daniel Córdova', '1234', false, 'Empresa Demo S.A.C.'),
+      new Supervisor('SUP-002', 'Andrés Paredes', '1234', true, 'Empresa Demo S.A.C.'),
+      new Supervisor('SUP-003', 'Rosa Medina', '1234', true, 'Empresa Demo S.A.C.'),
     ];
   }
 

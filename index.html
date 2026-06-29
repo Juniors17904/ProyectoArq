@@ -5,25 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0d1117" />
   <meta name="description" content="Sistema de Gestión de Vales de Salida de Almacén" />
-  <title>AlmacénPro</title>
+  <title>Almacén</title>
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="css/estilos.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
+  <button id="btn-instalar" class="btn-instalar oculto">📲 Instalar App</button>
 
-  <!-- BOTÓN INSTALAR PWA -->
-  <button id="btn-instalar" class="btn-instalar oculto">
-    📲 Instalar App
-  </button>
-
-  <!-- ═══════════════════════════════════════ LOGIN -->
   <div id="pantalla-login" class="pantalla activa">
     <div class="login-fondo">
       <div class="login-contenedor">
         <div class="login-logo">
           <div class="login-icono">🏭</div>
-          <h1>AlmacénPro</h1>
+          <h1>Almacén</h1>
           <p>Sistema de Gestión de Vales</p>
         </div>
         <form id="formulario-login" class="card">
@@ -44,9 +39,7 @@
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════ DASHBOARD -->
   <div id="pantalla-dashboard" class="pantalla">
-    <!-- Menú lateral -->
     <div id="overlay-menu" class="overlay oculto"></div>
     <nav id="menu-lateral" class="menu-lateral">
       <div class="menu-perfil">
@@ -63,18 +56,16 @@
         <li class="menu-salir" onclick="document.getElementById('btn-cerrar-sesion').click()">🚪 Cerrar Sesión</li>
       </ul>
     </nav>
-
     <header class="topbar">
       <div class="topbar-izq">
         <button id="btn-menu" class="btn-icono">☰</button>
-        <span class="topbar-titulo">AlmacénPro</span>
+        <span class="topbar-titulo">Almacén</span>
       </div>
       <div class="topbar-der">
         <span id="badge-temporal" class="badge-temp oculto">TEMP</span>
         <span id="nombre-supervisor" class="nombre-header"></span>
       </div>
     </header>
-
     <main class="contenido">
       <div class="bienvenida">
         <div class="bienvenida-texto">
@@ -87,22 +78,11 @@
           <button id="btn-cerrar-sesion" class="btn btn-ghost">🚪 Salir</button>
         </div>
       </div>
-
       <div class="stats-fila">
-        <div class="stat-card">
-          <div class="stat-num" id="stat-total">0</div>
-          <div class="stat-label">Vales Hoy</div>
-        </div>
-        <div class="stat-card stat-amarillo">
-          <div class="stat-num" id="stat-pendientes">0</div>
-          <div class="stat-label">Pendientes</div>
-        </div>
-        <div class="stat-card stat-verde">
-          <div class="stat-num" id="stat-despachados">0</div>
-          <div class="stat-label">Despachados</div>
-        </div>
+        <div class="stat-card"><div class="stat-num" id="stat-total">0</div><div class="stat-label">Vales Hoy</div></div>
+        <div class="stat-card stat-amarillo"><div class="stat-num" id="stat-pendientes">0</div><div class="stat-label">Pendientes</div></div>
+        <div class="stat-card stat-verde"><div class="stat-num" id="stat-despachados">0</div><div class="stat-label">Despachados</div></div>
       </div>
-
       <section class="seccion-recientes">
         <h3>Últimos Vales</h3>
         <div id="lista-recientes"></div>
@@ -110,7 +90,6 @@
     </main>
   </div>
 
-  <!-- ═══════════════════════════════════════ FORMULARIO VALE -->
   <div id="pantalla-formulario" class="pantalla">
     <header class="topbar">
       <button id="btn-volver-formulario" class="btn-volver">← Volver</button>
@@ -118,121 +97,56 @@
     </header>
     <main class="contenido contenido-formulario">
       <form id="formulario-vale">
-
         <div class="card">
           <h3>Datos del Vale</h3>
-          <div class="campo">
-            <label>Responsable</label>
-            <input type="text" id="input-responsable" placeholder="Nombre del responsable" required />
-          </div>
-          <div class="campo">
-            <label>Empresa</label>
-            <input type="text" id="input-empresa" placeholder="CONSORCIO DHMONT & CG & M SAC" />
-          </div>
+          <div class="campo"><label>Responsable</label><input type="text" id="input-responsable" placeholder="Nombre del responsable" required /></div>
+          <div class="campo"><label>Empresa</label><input type="text" id="input-empresa" placeholder="Empresa Demo S.A.C." /></div>
           <div class="fila-campos">
-            <div class="campo">
-              <label>Categoría</label>
-              <select id="select-categoria">
-                <option>Consumibles</option>
-                <option>EPPs</option>
-                <option>Máquinas</option>
-                <option>Herramientas</option>
-                <option>General</option>
-                <option>Otros</option>
-              </select>
-            </div>
-            <div class="campo">
-              <label>Validez</label>
-              <select id="select-validez">
-                <option value="4">4 horas</option>
-                <option value="8" selected>8 horas</option>
-                <option value="24">24 horas</option>
-              </select>
-            </div>
+            <div class="campo"><label>Categoría</label><select id="select-categoria"><option>Consumibles</option><option>EPPs</option><option>Máquinas</option><option>Herramientas</option><option>General</option><option>Otros</option></select></div>
+            <div class="campo"><label>Validez</label><select id="select-validez"><option value="4">4 horas</option><option value="8" selected>8 horas</option><option value="24">24 horas</option></select></div>
           </div>
-          <div class="campo">
-            <label>Justificación</label>
-            <textarea id="input-justificacion" rows="2" placeholder="Ej: Consumible para acabado de estructuras metálicas"></textarea>
-          </div>
+          <div class="campo"><label>Justificación</label><textarea id="input-justificacion" rows="2" placeholder="Ej: Consumible para acabado de estructuras metálicas"></textarea></div>
         </div>
-
         <div class="card">
           <h3>Catálogo de Materiales</h3>
           <div id="tabs-categorias" class="tabs-categorias"></div>
           <div id="grid-materiales" class="grid-materiales"></div>
         </div>
-
         <div class="card">
           <h3>Resumen del Pedido <span id="contador-items" class="badge-contador">0</span></h3>
-          <div id="resumen-items" class="resumen-items">
-            <p class="vacio-resumen">Selecciona materiales del catálogo</p>
-          </div>
+          <div id="resumen-items" class="resumen-items"><p class="vacio-resumen">Selecciona materiales del catálogo</p></div>
         </div>
-
-        <button type="submit" class="btn btn-primario btn-completo btn-grande">
-          🎫 Generar Vale con QR
-        </button>
+        <button type="submit" class="btn btn-primario btn-completo btn-grande">🎫 Generar Vale con QR</button>
       </form>
     </main>
   </div>
 
-  <!-- ═══════════════════════════════════════ VALE GENERADO -->
   <div id="pantalla-vale" class="pantalla">
     <header class="topbar no-print">
       <button id="btn-inicio-desde-vale" class="btn-volver">← Inicio</button>
       <span class="topbar-titulo">Vale Generado</span>
     </header>
-
     <main class="contenido">
-      <!-- Documento tipo vale imprimible -->
       <div class="vale-documento" id="vale-documento">
         <div class="vale-encabezado-empresa" id="vale-empresa"></div>
         <h2 class="vale-titulo">Vale de Salida</h2>
-
         <div class="vale-meta">
           <div class="vale-meta-izq">
-            <div class="vale-fila-meta">
-              <span class="vale-etiqueta">Nro:</span>
-              <span id="vale-nro" class="vale-valor-grande"></span>
-            </div>
-            <div class="vale-fila-meta">
-              <span class="vale-etiqueta">Responsable</span>
-              <span id="vale-responsable" class="vale-valor"></span>
-            </div>
+            <div class="vale-fila-meta"><span class="vale-etiqueta">Nro:</span><span id="vale-nro" class="vale-valor-grande"></span></div>
+            <div class="vale-fila-meta"><span class="vale-etiqueta">Responsable</span><span id="vale-responsable" class="vale-valor"></span></div>
           </div>
           <div class="vale-meta-der">
-            <div class="vale-fila-meta">
-              <span class="vale-etiqueta">Estado</span>
-              <span id="vale-estado" class="vale-valor vale-estado-texto"></span>
-            </div>
-            <div class="vale-fila-meta">
-              <span class="vale-etiqueta">Fecha</span>
-              <span id="vale-fecha" class="vale-valor"></span>
-            </div>
-            <div class="vale-fila-meta">
-              <span class="vale-etiqueta">Categoría</span>
-              <span id="vale-categoria" class="vale-valor"></span>
-            </div>
+            <div class="vale-fila-meta"><span class="vale-etiqueta">Estado</span><span id="vale-estado" class="vale-valor vale-estado-texto"></span></div>
+            <div class="vale-fila-meta"><span class="vale-etiqueta">Fecha</span><span id="vale-fecha" class="vale-valor"></span></div>
+            <div class="vale-fila-meta"><span class="vale-etiqueta">Categoría</span><span id="vale-categoria" class="vale-valor"></span></div>
           </div>
         </div>
-
         <div class="vale-tabla-contenedor">
           <table class="vale-tabla">
-            <thead>
-              <tr>
-                <th>N</th>
-                <th>Almacén</th>
-                <th>Código</th>
-                <th>Material</th>
-                <th>U.Medida</th>
-                <th>Cantidad</th>
-                <th>Ubicación</th>
-              </tr>
-            </thead>
+            <thead><tr><th>N</th><th>Almacén</th><th>Código</th><th>Material</th><th>U.Medida</th><th>Cantidad</th><th>Ubicación</th></tr></thead>
             <tbody id="vale-tabla-items"></tbody>
           </table>
         </div>
-
         <div class="vale-pie">
           <div class="vale-qr-seccion">
             <div class="vale-qr-estado">Aprobado</div>
@@ -245,17 +159,9 @@
             <div class="firma-box">Recojo</div>
           </div>
         </div>
-
-        <div class="vale-justificacion">
-          <strong>Justificación</strong>
-          <p id="vale-justificacion"></p>
-        </div>
-
-        <div class="vale-vencimiento">
-          ⏱ Válido hasta: <span id="vale-vence"></span>
-        </div>
+        <div class="vale-justificacion"><strong>Justificación</strong><p id="vale-justificacion"></p></div>
+        <div class="vale-vencimiento">⏱ Válido hasta: <span id="vale-vence"></span></div>
       </div>
-
       <div class="acciones-vale no-print">
         <button id="btn-imprimir" class="btn btn-primario">🖨 Imprimir / Compartir</button>
         <button id="btn-nuevo-desde-vale" class="btn btn-secundario">➕ Nuevo Vale</button>
@@ -263,7 +169,6 @@
     </main>
   </div>
 
-  <!-- ═══════════════════════════════════════ HISTORIAL -->
   <div id="pantalla-historial" class="pantalla">
     <header class="topbar">
       <button id="btn-volver-historial" class="btn-volver">← Volver</button>
@@ -272,50 +177,35 @@
     <main class="contenido">
       <div class="barra-filtros">
         <input type="text" id="filtro-buscar" placeholder="🔍 Buscar responsable o N° vale..." />
-        <select id="filtro-estado">
-          <option value="">Todos</option>
-          <option value="Aprobado">Aprobado</option>
-          <option value="Despachado">Despachado</option>
-          <option value="Pendiente">Pendiente</option>
-        </select>
+        <select id="filtro-estado"><option value="">Todos</option><option value="Aprobado">Aprobado</option><option value="Despachado">Despachado</option><option value="Pendiente">Pendiente</option></select>
       </div>
       <div id="lista-historial"></div>
     </main>
   </div>
 
-  <!-- Scripts — modelos -->
   <script src="js/modelos/material.js"></script>
   <script src="js/modelos/categoria.js"></script>
   <script src="js/modelos/item_vale.js"></script>
   <script src="js/modelos/supervisor.js"></script>
   <script src="js/modelos/vale.js"></script>
-  <!-- Scripts — servicios -->
   <script src="js/servicios/gestor_storage.js"></script>
   <script src="js/servicios/gestor_pwa.js"></script>
   <script src="js/servicios/generador_qr.js"></script>
   <script src="js/servicios/catalogo_materiales.js"></script>
-  <!-- Scripts — vistas -->
   <script src="js/vistas/vista_base.js"></script>
   <script src="js/vistas/vista_login.js"></script>
   <script src="js/vistas/vista_dashboard.js"></script>
   <script src="js/vistas/vista_formulario_vale.js"></script>
   <script src="js/vistas/vista_vale_generado.js"></script>
   <script src="js/vistas/vista_historial.js"></script>
-  <!-- Scripts — controladores -->
   <script src="js/controladores/controlador_login.js"></script>
   <script src="js/controladores/controlador_vale.js"></script>
   <script src="js/controladores/controlador_app.js"></script>
-  <!-- Arranque -->
   <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js');
-    }
+    if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js'); }
     const app = new ControladorApp();
     app.iniciar();
-
-    document.getElementById('fecha-hoy').textContent = new Date().toLocaleDateString('es-PE', {
-      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-    });
+    document.getElementById('fecha-hoy').textContent = new Date().toLocaleDateString('es-PE', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
   </script>
 </body>
 </html>
