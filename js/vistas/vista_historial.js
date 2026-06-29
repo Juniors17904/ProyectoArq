@@ -1,10 +1,12 @@
 class VistaHistorial extends VistaBase {
   #onVolver;
+  #onVerVale;
   #todosLosVales;
 
-  constructor(onVolver) {
+  constructor(onVolver, onVerVale) {
     super('pantalla-historial');
     this.#onVolver = onVolver;
+    this.#onVerVale = onVerVale;
     this.#todosLosVales = [];
     this.#vincular();
   }
@@ -40,7 +42,7 @@ class VistaHistorial extends VistaBase {
     }
     const fmt = (d) => new Date(d).toLocaleString('es-PE', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' });
     lista.innerHTML = vales.map(v => `
-      <div class="card-historial estado-${v.estado.toLowerCase()}">
+      <div class="card-historial estado-${v.estado.toLowerCase()}" data-nro="${v.nro}" style="cursor:pointer;">
         <div class="historial-header">
           <div>
             <span class="historial-nro">Vale #${v.nro}</span>
@@ -51,7 +53,16 @@ class VistaHistorial extends VistaBase {
         <div class="historial-responsable">👤 ${v.responsable}</div>
         <div class="historial-items">${v.items.length} ítem(s) — ${v.categoria}</div>
         <div class="historial-vence">Vence: ${fmt(v.fechaVencimiento)}</div>
+        <div class="historial-ver">Ver detalle →</div>
       </div>
     `).join('');
+
+    lista.querySelectorAll('.card-historial').forEach(card => {
+      card.addEventListener('click', () => {
+        const nro = parseInt(card.dataset.nro);
+        const vale = this.#todosLosVales.find(v => v.nro === nro);
+        if (vale) this.#onVerVale(vale);
+      });
+    });
   }
 }

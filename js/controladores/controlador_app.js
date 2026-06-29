@@ -31,7 +31,10 @@ class ControladorApp {
       () => this.#irAFormulario(),
       () => this.#irADashboard()
     );
-    this.#vistaHistorial = new VistaHistorial(() => this.#irADashboard());
+    this.#vistaHistorial = new VistaHistorial(
+      () => this.#irADashboard(),
+      (valeObj) => this.#verValeDesdeHistorial(valeObj)
+    );
 
     this.#controladorLogin = new ControladorLogin(
       this.#vistaLogin,
@@ -78,6 +81,12 @@ class ControladorApp {
   }
 
   #alGenerarVale(vale) {
+    this.#vistaVale.mostrar();
+    this.#vistaVale.renderizar(vale);
+  }
+
+  #verValeDesdeHistorial(valeObj) {
+    const vale = Vale.desdeObjeto(valeObj);
     this.#vistaVale.mostrar();
     this.#vistaVale.renderizar(vale);
   }
