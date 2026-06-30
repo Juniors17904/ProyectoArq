@@ -300,7 +300,7 @@
   <script src="js/controladores/controlador_app.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js');
+      navigator.serviceWorker.register('/sw.js', { updateViaCache: 'none' });
     }
     const app = new ControladorApp();
     app.iniciar();

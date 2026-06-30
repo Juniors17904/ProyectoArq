@@ -1,4 +1,4 @@
-const CACHE = 'almacen-v18';
+const CACHE = 'almacen-v19';
 const ARCHIVOS = [
   '/',
   '/index.html',
