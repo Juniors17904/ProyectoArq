@@ -51,10 +51,34 @@ class DiagnosticoPwa {
 
     puntos.push({ ok: window.__promptInstalar != null, texto: 'Chrome ofrece instalación automática' });
 
+    const ua = navigator.userAgent;
+    const esChromeReal = /Chrome\/\d+/.test(ua) && !/(EdgA|EdgiOS|OPR|OPiOS|SamsungBrowser|MiuiBrowser|HeyTapBrowser|YaBrowser|UCBrowser|DuckDuckGo|FxiOS|CriOS|Brave)/i.test(ua);
+    puntos.push({ ok: esChromeReal, texto: esChromeReal ? 'Es Chrome (permite instalar)' : 'NO es Chrome: ' + this.#nombreNavegador(ua) });
+
+    const ahorroDatos = !!(navigator.connection && navigator.connection.saveData);
+    puntos.push({ ok: !ahorroDatos, texto: ahorroDatos ? 'Ahorro de datos ACTIVADO (bloquea instalar)' : 'Ahorro de datos desactivado' });
+
     const yaInstalada = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
     puntos.push({ ok: yaInstalada, texto: yaInstalada ? 'Abierta como app instalada' : 'Abierta en navegador (aún no instalada)', info: true });
 
+    puntos.push({ texto: 'Navegador: ' + this.#nombreNavegador(ua), info: true });
+
     return puntos;
+  }
+
+  #nombreNavegador(ua) {
+    if (/MiuiBrowser/i.test(ua)) return 'Mi Browser (Xiaomi)';
+    if (/HeyTapBrowser/i.test(ua)) return 'Navegador Oppo/Realme';
+    if (/SamsungBrowser/i.test(ua)) return 'Samsung Internet';
+    if (/(OPR|OPiOS)/i.test(ua)) return 'Opera';
+    if (/(EdgA|EdgiOS)/i.test(ua)) return 'Edge';
+    if (/YaBrowser/i.test(ua)) return 'Yandex';
+    if (/UCBrowser/i.test(ua)) return 'UC Browser';
+    if (/Brave/i.test(ua)) return 'Brave';
+    if (/CriOS/i.test(ua)) return 'Chrome iOS';
+    if (/FxiOS|Firefox/i.test(ua)) return 'Firefox';
+    if (/Chrome\/\d+/.test(ua)) return 'Chrome';
+    return 'Desconocido';
   }
 
   #imagenCarga(src) {
