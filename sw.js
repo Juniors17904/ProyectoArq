@@ -1,4 +1,4 @@
-const CACHE = 'almacen-v22';
+const CACHE = 'almacen-v23';
 const ARCHIVOS = [
   '/',
   '/index.html',
@@ -43,9 +43,17 @@ self.addEventListener('activate', e => {
   );
 });
 
+// Network-first: siempre intenta la versión más reciente de la red y actualiza
+// la caché; si no hay conexión, responde con lo último guardado en caché.
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
   e.respondWith(
-    caches.match(e.request).then(cached => cached || fetch(e.request))
+    fetch(e.request)
+      .then(respuesta => {
+        const copia = respuesta.clone();
+        caches.open(CACHE).then(c => c.put(e.request, copia)).catch(() => {});
+        return respuesta;
+      })
+      .catch(() => caches.match(e.request))
   );
 });
