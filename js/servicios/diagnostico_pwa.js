@@ -52,7 +52,11 @@ class DiagnosticoPwa {
     if (icono512) carga512 = await this.#imagenCarga(icono512.src);
     puntos.push({ ok: carga512, texto: 'El ícono 512 carga de verdad' });
 
-    puntos.push({ ok: window.__promptInstalar != null, texto: 'Chrome ofrece instalación automática' });
+    puntos.push({
+      ok: window.__promptInstalar != null,
+      texto: 'Chrome ofrece instalación automática',
+      detalle: 'Todo lo demás está OK. Si SOLO falla esto, NO es la app: Chrome dejó de ofrecer instalar este sitio (modo castigo ~90 días porque el aviso se cerró/ignoró varias veces). Para destrabarlo: 1) Borra los datos del sitio (Configuración → Configuración de sitios → este sitio → Borrar y restablecer). 2) Cierra Chrome por completo. 3) Reentra y usa la app ~30 seg. Ya cambiamos el id interno para ayudar a reiniciar ese castigo.'
+    });
 
     const ua = navigator.userAgent;
     const esChromeReal = /Chrome\/\d+/.test(ua) && !/(EdgA|EdgiOS|OPR|OPiOS|SamsungBrowser|MiuiBrowser|HeyTapBrowser|YaBrowser|UCBrowser|DuckDuckGo|FxiOS|CriOS|Brave)/i.test(ua);
@@ -134,6 +138,12 @@ class DiagnosticoPwa {
         const color = p.info ? '#58a6ff' : (p.ok ? '#3fb950' : '#ff7b72');
         fila.innerHTML = `<span style="font-size:1.1rem;">${icono}</span><span style="color:${color};">${p.texto}</span>`;
         lista.appendChild(fila);
+        if (p.detalle && !p.ok) {
+          const det = document.createElement('div');
+          det.style.cssText = 'font-size:0.74rem;color:#8b949e;line-height:1.45;padding:0 0 10px 32px;border-bottom:1px solid #21262d;';
+          det.textContent = p.detalle;
+          lista.appendChild(det);
+        }
         requestAnimationFrame(() => { fila.style.opacity = '1'; });
       }, i * 280);
     });

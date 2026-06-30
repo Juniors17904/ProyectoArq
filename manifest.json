@@ -2,7 +2,7 @@
   "name": "ValeQR - Arquideas Metálica",
   "short_name": "ValeQR",
   "description": "Sistema de gestión de vales de salida de almacén",
-  "id": "/",
+  "id": "/?app=valeqr-v2",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
