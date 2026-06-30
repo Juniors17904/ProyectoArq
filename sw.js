@@ -1,8 +1,10 @@
-const CACHE = 'almacen-v21';
+const CACHE = 'almacen-v22';
 const ARCHIVOS = [
   '/',
   '/index.html',
   '/manifest.json',
+  '/iconos/icono-192.png',
+  '/iconos/icono-512.png',
   '/css/estilos.css',
   '/js/modelos/material.js',
   '/js/modelos/categoria.js',

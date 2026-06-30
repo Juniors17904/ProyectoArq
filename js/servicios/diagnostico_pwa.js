@@ -23,6 +23,9 @@ class DiagnosticoPwa {
     }
     puntos.push({ ok: swActivo, texto: 'Service Worker instalado y activo' });
 
+    const swControla = soportaSW && navigator.serviceWorker.controller != null;
+    puntos.push({ ok: swControla, texto: swControla ? 'Service Worker controla esta pestaña' : 'El Service Worker aún no controla la pestaña: recarga la página' });
+
     const linkManifest = document.querySelector('link[rel="manifest"]');
     puntos.push({ ok: !!linkManifest, texto: 'Manifest enlazado en la página' });
 
