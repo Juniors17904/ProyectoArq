@@ -33,7 +33,7 @@ class VistaFormularioVale extends VistaBase {
   #renderizarCategorias() {
     const tabs = document.getElementById('tabs-categorias');
     tabs.innerHTML = this.#catalogo.categorias.map(cat => `
-      <button class="tab-categoria ${cat.id === this.#categoriaActiva ? 'activa' : ''}" data-id="${cat.id}">
+      <button type="button" class="tab-categoria ${cat.id === this.#categoriaActiva ? 'activa' : ''}" data-id="${cat.id}">
         <span>${cat.icono}</span>
         <span>${cat.nombre}</span>
       </button>
@@ -97,11 +97,11 @@ class VistaFormularioVale extends VistaBase {
       <div class="fila-resumen">
         <span class="resumen-nombre">${item.nombre}</span>
         <div class="resumen-cantidad">
-          <button class="btn-cant" data-idx="${idx}" data-op="menos">−</button>
+          <button type="button" class="btn-cant" data-idx="${idx}" data-op="menos">−</button>
           <span>${item.cantidad}</span>
-          <button class="btn-cant" data-idx="${idx}" data-op="mas">+</button>
+          <button type="button" class="btn-cant" data-idx="${idx}" data-op="mas">+</button>
         </div>
-        <button class="btn-quitar" data-idx="${idx}">✕</button>
+        <button type="button" class="btn-quitar" data-idx="${idx}">✕</button>
       </div>
     `).join('');
 
