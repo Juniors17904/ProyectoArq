@@ -2,8 +2,22 @@ class DiagnosticoPwa {
   #overlay;
 
   async ejecutar() {
+    await this.#esperarPrompt(3000);
     const puntos = await this.#recolectar();
     this.#render(puntos);
+  }
+
+  #esperarPrompt(ms) {
+    return new Promise(res => {
+      if (window.__promptInstalar) return res();
+      const fin = Date.now() + ms;
+      const t = setInterval(() => {
+        if (window.__promptInstalar || Date.now() > fin) {
+          clearInterval(t);
+          res();
+        }
+      }, 200);
+    });
   }
 
   async #recolectar() {
@@ -55,7 +69,7 @@ class DiagnosticoPwa {
     puntos.push({
       ok: window.__promptInstalar != null,
       texto: 'Chrome ofrece instalación automática',
-      detalle: 'Todo lo demás está OK. Si SOLO falla esto, NO es la app: Chrome dejó de ofrecer instalar este sitio (modo castigo ~90 días porque el aviso se cerró/ignoró varias veces). Para destrabarlo: 1) Borra los datos del sitio (Configuración → Configuración de sitios → este sitio → Borrar y restablecer). 2) Cierra Chrome por completo. 3) Reentra y usa la app ~30 seg. Ya cambiamos el id interno para ayudar a reiniciar ese castigo.'
+      detalle: 'RAZÓN REAL (no es el código, todo lo demás está verde): el evento beforeinstallprompt es el ÚNICO disparador de "Instalar" en Android, y Chrome lo activa SOLO cuando el sitio acumula suficiente "Site Engagement Score" (puntaje por uso real: abrir, tocar, navegar, volver varias veces). OJO: BORRAR los datos del sitio REINICIA ese puntaje a cero. Por eso fallaba: cada limpieza lo dejaba en cero. FIX: NO borres datos. Usa la app normal (login, Nuevo Vale, Historial, volver) en 2-3 visitas separadas; cuando el puntaje sube, este punto pasa a verde y aparece "Instalar app".'
     });
 
     const ua = navigator.userAgent;
