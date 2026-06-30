@@ -179,22 +179,7 @@ Reglas:
 
 ---
 
-## Ramas y flujo de trabajo
+## Publicar cambios
 
-- Hacer commit con mensajes descriptivos en español
-- Push a la rama de desarrollo al terminar cada cambio
-
-**Flujo obligatorio para que Vercel despliegue:**
-
-Vercel está conectado al repositorio de GitHub y despliega automáticamente cada vez que detecta un push a `master` o `main`. Por eso, después de cada cambio:
-
-```bash
-git push origin <rama-feature>
-git checkout master
-git merge <rama-feature>
-git push origin master
-```
-
-- El sitio se sirve desde `master` (Vercel apunta a `master`)
-- NUNCA dejar cambios solo en la rama de desarrollo sin mergear a `master`
-- SIEMPRE hacer el merge y push a `master` al terminar cada cambio
+- Hacer commit con mensajes descriptivos en español.
+- Para que el sitio se actualice, los cambios deben terminar en `master`: Vercel publica automáticamente cada push a `master`.
