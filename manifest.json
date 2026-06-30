@@ -9,6 +9,9 @@
   "background_color": "#0d1117",
   "theme_color": "#0d1117",
   "orientation": "portrait-primary",
+  "lang": "es",
+  "dir": "ltr",
+  "categories": ["business", "productivity"],
   "icons": [
     {
       "src": "/iconos/icono-192.png",
@@ -33,6 +36,22 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/iconos/icono-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Pantalla principal de ValeQR"
+    },
+    {
+      "src": "/iconos/icono-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Pantalla principal de ValeQR"
     }
   ]
 }
