@@ -28,7 +28,7 @@ body {
 /* ═══════════════ LOGIN ═══════════════ */
 .login-fondo {
   min-height: 100vh; display: flex; align-items: center; justify-content: center;
-  background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #0d1117 100%);
+  background: #ff0000;
   padding: 20px;
 }
 .login-contenedor { width: 100%; max-width: 400px; }
