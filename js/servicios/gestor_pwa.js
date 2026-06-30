@@ -29,14 +29,6 @@ class GestorPWA {
       prompt.userChoice.then(() => { window.__promptInstalar = null; });
       return;
     }
-    this.#mostrarInstrucciones();
-  }
-
-  #mostrarInstrucciones() {
-    const esIOS = /iphone|ipad|ipod/i.test(window.navigator.userAgent);
-    const mensaje = esIOS
-      ? 'Para instalar:\n1. Toca el botón Compartir (cuadro con flecha) abajo.\n2. Elige "Agregar a inicio".'
-      : 'Para instalar:\n1. Toca los 3 puntitos (⋮) arriba a la derecha.\n2. Elige "Instalar app" o "Agregar a la pantalla principal".';
-    alert(mensaje);
+    new DiagnosticoPwa().ejecutar();
   }
 }

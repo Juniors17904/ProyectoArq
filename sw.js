@@ -1,4 +1,4 @@
-const CACHE = 'almacen-v19';
+const CACHE = 'almacen-v20';
 const ARCHIVOS = [
   '/',
   '/index.html',
@@ -11,6 +11,7 @@ const ARCHIVOS = [
   '/js/modelos/vale.js',
   '/js/servicios/gestor_storage.js',
   '/js/servicios/gestor_pwa.js',
+  '/js/servicios/diagnostico_pwa.js',
   '/js/servicios/generador_qr.js',
   '/js/servicios/catalogo_materiales.js',
   '/js/vistas/vista_base.js',
