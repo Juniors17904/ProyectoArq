@@ -1,42 +1,32 @@
 class GestorPWA {
-  #promptInstalacion;
   #boton;
 
   constructor(idBoton) {
-    this.#promptInstalacion = null;
     this.#boton = document.getElementById(idBoton);
     this.#escucharEvento();
-    this.#mostrarSiCorresponde();
+    this.#actualizarVisibilidad();
   }
 
   #escucharEvento() {
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      this.#promptInstalacion = e;
-      if (this.#boton) this.#boton.classList.remove('oculto');
-    });
-
+    window.addEventListener('pwa-instalable', () => this.#actualizarVisibilidad());
     window.addEventListener('appinstalled', () => {
+      window.__promptInstalar = null;
       if (this.#boton) this.#boton.classList.add('oculto');
     });
   }
 
-  #mostrarSiCorresponde() {
+  #actualizarVisibilidad() {
     if (!this.#boton) return;
     const yaInstalada = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-    if (yaInstalada) {
-      this.#boton.classList.add('oculto');
-    } else {
-      this.#boton.classList.remove('oculto');
-    }
+    if (yaInstalada) this.#boton.classList.add('oculto');
+    else this.#boton.classList.remove('oculto');
   }
 
   instalar() {
-    if (this.#promptInstalacion) {
-      this.#promptInstalacion.prompt();
-      this.#promptInstalacion.userChoice.then(() => {
-        this.#promptInstalacion = null;
-      });
+    const prompt = window.__promptInstalar;
+    if (prompt) {
+      prompt.prompt();
+      prompt.userChoice.then(() => { window.__promptInstalar = null; });
       return;
     }
     this.#mostrarInstrucciones();
